@@ -3,32 +3,36 @@
 import { useState, useEffect, useRef } from "react";
 import { SEARCH_CONFIG } from "@/config/constants";
 import { fetchLocationSuggestions } from "@/app/lib/api";
+import { X } from "lucide-react";
 
-interface InputFieldProps {
+interface StopInputFieldProps {
   id: string;
   value: string;
   onChange: (value: string) => void;
-  placeholder: string;
+  onRemove?: () => void; // Optional remove function for existing stops
+  placeholder?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ id, value, onChange, placeholder }) => {
+const StopInputField: React.FC<StopInputFieldProps> = ({ id, value, onChange, onRemove, placeholder = "Add a stop (optional)" }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const inputRef = useRef<HTMLDivElement>(null); // Ref to track clicks outside
+  const inputRef = useRef<HTMLDivElement>(null);
 
-  // Fetch location suggestions with debounce
+  // Fetch suggestions with debounce
   useEffect(() => {
     const delay = setTimeout(async () => {
-      if (value) {
+      if (value.trim().length > 2) {
         const results = await fetchLocationSuggestions(value);
         setSuggestions(results);
+      } else {
+        setSuggestions([]);
       }
     }, SEARCH_CONFIG.DEBOUNCE_DELAY);
 
     return () => clearTimeout(delay);
   }, [value]);
 
-  // Detect outside clicks to close suggestions
+  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
@@ -43,17 +47,24 @@ const InputField: React.FC<InputFieldProps> = ({ id, value, onChange, placeholde
   return (
     <div ref={inputRef} className="relative w-full sm:flex-1">
       <label htmlFor={id} className="sr-only">{placeholder}</label>
-      <input
-        id={id}
-        type="text"
-        value={value}
-        onChange={(e) => {
-          onChange(e.target.value);
-          setShowSuggestions(true);
-        }}
-        placeholder={placeholder}
-        className="w-full p-3 border border-border rounded-lg text-textPrimary bg-surface placeholder-textSecondary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-      />
+      <div className="flex items-center gap-2 p-2 bg-surface border border-border rounded-lg">
+        <input
+          id={id}
+          type="text"
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value);
+            setShowSuggestions(true);
+          }}
+          placeholder={placeholder}
+          className="w-full p-3 bg-transparent text-textPrimary placeholder-textSecondary focus:outline-none"
+        />
+        {onRemove && (
+          <button onClick={onRemove} className="text-error p-1 hover:bg-error/20 rounded-full">
+            <X size={18} />
+          </button>
+        )}
+      </div>
 
       {/* Location Suggestions Dropdown */}
       {showSuggestions && suggestions.length > 0 && (
@@ -76,4 +87,4 @@ const InputField: React.FC<InputFieldProps> = ({ id, value, onChange, placeholde
   );
 };
 
-export default InputField;
+export default StopInputField;
