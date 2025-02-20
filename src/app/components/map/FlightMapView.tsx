@@ -34,7 +34,14 @@ const FitBounds: React.FC<{ flightRoute: FlightRoute; waypoints: Waypoint[] }> =
 
     // Combine all bounds and fit map
     const bounds = L.latLngBounds([...routeBounds, ...waypointBounds]);
-    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 5, animate: true });
+    map.fitBounds(bounds, { padding: [80, 80], animate: true });
+
+    // ✅ Fix: Ensure zoom isn't too zoomed out
+    setTimeout(() => {
+      if (map.getZoom() < 3) {
+        map.setZoom(3);
+      }
+    }, 500);
 
   }, [flightRoute, waypoints, map]);
 
@@ -48,7 +55,7 @@ const FlightMapView: React.FC<FlightMapViewProps> = ({ flightRoute, waypoints })
   const greatCirclePath = useMemo(() => computeGreatCircleArc(flightRoute.coordinates), [flightRoute]);
 
   return (
-    <MapContainer center={defaultCenter} zoom={3} className="h-[500px] w-full rounded-lg shadow-lg">
+    <MapContainer center={defaultCenter} zoom={4} className="h-[500px] w-full rounded-lg shadow-lg">
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       {/* ✈️ Flight Path - Great Circle Arc */}

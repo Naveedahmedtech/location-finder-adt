@@ -18,6 +18,7 @@ interface SearchFormProps {
   setStops: (stops: string[]) => void;
   tripOptions: string[];
   onSearch: () => void;
+  hiddenDropdown?: boolean;
 }
 
 const SearchForm: React.FC<SearchFormProps> = ({
@@ -31,6 +32,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
   setStops,
   tripOptions,
   onSearch,
+  hiddenDropdown,
 }) => {
   const [newStop, setNewStop] = useState("");
 
@@ -49,7 +51,10 @@ const SearchForm: React.FC<SearchFormProps> = ({
     <div className="max-w-4xl mx-auto bg-background p-4 md:p-6 rounded-lg shadow-lg border border-border">
       {/* Search Controls */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <Dropdown value={tripType} onChange={setTripType} options={tripOptions} />
+        {
+          !hiddenDropdown &&
+          <Dropdown value={tripType} onChange={setTripType} options={tripOptions} />
+        }
         <InputField id="from-location" value={from} onChange={setFrom} placeholder="From (city, airport)" />
         <InputField id="to-location" value={to} onChange={setTo} placeholder="To (city, airport)" />
         <SearchButton onClick={onSearch} />

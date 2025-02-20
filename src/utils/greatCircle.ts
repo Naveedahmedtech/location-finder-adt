@@ -21,7 +21,7 @@ export const computeGreatCircleArc = (coordinates: [number, number][]): LatLngTu
   const [lng1, lat1] = coordinates[0];
   const [lng2, lat2] = coordinates[1];
 
-  const numPoints = 100; // More points for a smoother curve
+  const numPoints = 50; // Adjust for smoother curves
   const arc: LatLngTuple[] = [];
 
   const φ1 = toRadians(lat1);
@@ -31,8 +31,12 @@ export const computeGreatCircleArc = (coordinates: [number, number][]): LatLngTu
 
   for (let i = 0; i <= numPoints; i++) {
     const fraction = i / numPoints;
-    const A = Math.sin((1 - fraction) * Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1))) / Math.sin(Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1)));
-    const B = Math.sin(fraction * Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1))) / Math.sin(Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1)));
+
+    const A = Math.sin((1 - fraction) * Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1))) / 
+              Math.sin(Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1)));
+    
+    const B = Math.sin(fraction * Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1))) / 
+              Math.sin(Math.acos(Math.sin(φ1) * Math.sin(φ2) + Math.cos(φ1) * Math.cos(φ2) * Math.cos(λ2 - λ1)));
 
     const x = A * Math.cos(φ1) * Math.cos(λ1) + B * Math.cos(φ2) * Math.cos(λ2);
     const y = A * Math.cos(φ1) * Math.sin(λ1) + B * Math.cos(φ2) * Math.sin(λ2);

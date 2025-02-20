@@ -2,7 +2,7 @@ export const API_CONFIG = {
   NOMINATIM_BASE_URL:
     process.env.NEXT_PUBLIC_NOMINATIM_API ||
     "https://nominatim.openstreetmap.org",
-    SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL || "https://0ffb-2407-d000-21-3e75-fc91-87d3-4f57-9bee.ngrok-free.app/api/v1",
+    SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:5000/api/v1",
 };
 
 export const SEARCH_CONFIG = {
@@ -18,3 +18,4 @@ export const API_ENDPOINTS = {
 
 
 export const tripOptions = ["Flight Distance", "Driving Distance"];
+export const APP_NAME = process.env.APP_NAME || "Travel Hours"
