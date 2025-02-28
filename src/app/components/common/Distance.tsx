@@ -9,8 +9,8 @@ import { handleDrivingSearch, handleFlightSearch } from "@/utils/search";
 import { tripOptions } from "@/config/constants";
 import { XCircle, X } from "lucide-react";
 
-const Hero: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => {
-  const [tripType, setTripType] = useState(tripOptions[0]);
+const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number }> = ({ title, subtitle, tripOption  }) => {
+  const [tripType, setTripType] = useState(tripOptions[tripOption]);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [stops, setStops] = useState<string[]>([]);
@@ -60,6 +60,7 @@ const Hero: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }
           setStops={setStops}
           tripOptions={tripOptions}
           onSearch={handleTripSearch}
+          hiddenDropdown={true}
         />
       </div>
 
@@ -115,4 +116,4 @@ const Hero: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }
   );
 };
 
-export default Hero;
+export default Distance;

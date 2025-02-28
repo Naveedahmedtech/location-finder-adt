@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_LINKS } from "@/utils/navLinks";
 import MobileMenu from "./ui/MobileMenu";
+import { APP_NAME } from "@/config/constants";
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -13,8 +14,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-text flex items-center gap-1">
-          <span className="text-text">TRAVEL</span>
-          <span className="text-secondary">HOURS</span>
+          <span className="text-text">{APP_NAME}</span>
         </Link>
 
         {/* Desktop Navigation */}
