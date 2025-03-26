@@ -14,8 +14,15 @@ export const SEARCH_CONFIG = {
 export const API_ENDPOINTS = {
   FLIGHT: "flight",
   DRIVING: "driving",
+  // Content API;
+  HOME_CONTENT: "homepage/homepage-texts",
+  ABOUT_CONTENT: "about/about-info",
+  PRIVACY_POLICY: "privacy-policy",
+  ADD_ABOUT_CONTENT: "about/create-about-info",
+  ADD_HOME_CONTENT: "homepage/homepage-texts",
+  ADD_PRIVACY_CONTENT: "create-privacy-policy"
 }
 
 
 export const tripOptions = ["Flight Distance", "Driving Distance"];
-export const APP_NAME = process.env.APP_NAME || "Travel Hours"
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Travel Hours"

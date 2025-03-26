@@ -8,9 +8,13 @@ import FlightMapView from "@/app/components/map/FlightMapView";
 import { handleDrivingSearch, handleFlightSearch } from "@/utils/search";
 import { tripOptions } from "@/config/constants";
 import { XCircle, X } from "lucide-react";
+import { useContent } from '@/context/ContentContext';
+import Features from './Features';
+import TripSummary from "@/app/components/common/TripSummary";
 
-const Hero: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => {
-  const [tripType, setTripType] = useState(tripOptions[0]);
+const Hero: React.FC<{ title: string; subtitle: string;  }> = ({ }) => {
+  const { content } = useContent();
+  const [tripType, setTripType] = useState(tripOptions[1]);
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [stops, setStops] = useState<string[]>([]);
@@ -44,74 +48,71 @@ const Hero: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }
   };
 
   return (
-    <section className="w-full bg-primary text-text py-16 md:py-24 px-4">
-      <HeroTitle title={title} subtitle={subtitle} />
+    <>
+      <section className="w-full bg-primary text-text py-16 md:py-24 px-4">
+        <HeroTitle title={content?.headline} subtitle={content?.cta} />
 
-      {/* Search Form */}
-      <div className="max-w-5xl mx-auto bg-background p-6 md:p-8 rounded-xl shadow-xl border border-border">
-        <SearchForm
-          tripType={tripType}
-          setTripType={setTripType}
-          from={from}
-          setFrom={setFrom}
-          to={to}
-          setTo={setTo}
-          stops={stops}
-          setStops={setStops}
-          tripOptions={tripOptions}
-          onSearch={handleTripSearch}
-        />
-      </div>
+        {/* Search Form */}
+        <div className="max-w-5xl mx-auto bg-background p-6 md:p-8 rounded-xl shadow-xl border border-border">
+          <SearchForm
+            tripType={tripType}
+            setTripType={setTripType}
+            from={from}
+            setFrom={setFrom}
+            to={to}
+            setTo={setTo}
+            stops={stops}
+            setStops={setStops}
+            tripOptions={tripOptions}
+            onSearch={handleTripSearch}
+          />
+        </div>
 
-      {/* Error Message */}
-      {error && (
-        <div className="max-w-4xl mx-auto mt-4 bg-error text-white px-4 py-3 rounded-lg shadow-md flex items-center justify-between animate-fadeIn">
-          <div className="flex items-center gap-2">
-            <XCircle className="w-6 h-6" />
-            <span>{error}</span>
+        {/* Error Message */}
+        {error && (
+          <div className="max-w-4xl mx-auto mt-4 bg-error text-white px-4 py-3 rounded-lg shadow-md flex items-center justify-between animate-fadeIn">
+            <div className="flex items-center gap-2">
+              <XCircle className="w-6 h-6" />
+              <span>{error}</span>
+            </div>
+            <button onClick={() => setError(null)} className="hover:opacity-80">
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          <button onClick={() => setError(null)} className="hover:opacity-80">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-      )}
+        )}
 
-      {/* Loading Animation */}
-      {loading && (
-        <div className="flex justify-center mt-6">
-          <div className="w-8 h-8 border-4 border-background border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      )}
-
-      {/* Trip Summary */}
-      {tripSummary && (
-        <div className="mt-8 mx-auto max-w-xl bg-surface p-6 rounded-lg shadow-lg text-center border border-border">
-          <h3 className="text-xl font-semibold text-textPrimary">🚀 Trip Summary</h3>
-          <div className="mt-2 text-lg">
-            <p className="font-medium text-textPrimary">
-              📏 Total Distance: <span className="font-bold">{tripSummary.distance} {tripSummary.unit}</span>
-            </p>
-            <p className="font-medium text-textPrimary">
-              ⏳ Estimated Duration: <span className="font-bold">{tripSummary.duration.hours}h {tripSummary.duration.minutes}m</span>
-            </p>
+        {/* Loading Animation */}
+        {loading && (
+          <div className="flex justify-center mt-6">
+            <div className="w-8 h-8 border-4 border-background border-t-transparent rounded-full animate-spin"></div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Map Section */}
-      {routes.length > 0 && (
-        <div className="mt-10 mx-auto max-w-6xl">
-          <h3 className="text-xl font-semibold text-center text-textPrimary mb-4">🗺️ Route Map</h3>
-          <div className="bg-surface p-4 rounded-xl shadow-xl border border-border">
-            {tripType === "Driving Distance" ? (
-              <MapView routes={routes} stops={waypoints} />
-            ) : (
-              <FlightMapView flightRoute={routes[0]} waypoints={waypoints} />
-            )}
+        {/* Trip Summary */}
+        {tripSummary && (
+            <TripSummary
+                distance={tripSummary.distance}
+                duration={tripSummary.duration}
+                unit={tripSummary.unit}
+            />
+        )}
+
+        {/* Map Section */}
+        {routes.length > 0 && (
+          <div className="mt-10 mx-auto max-w-6xl">
+            <h3 className="text-xl font-semibold text-center text-textPrimary mb-4">🗺️ Route Map</h3>
+            <div className="bg-surface p-4 rounded-xl shadow-xl border border-border">
+              {tripType === "Driving Distance" ? (
+                <MapView routes={routes} stops={waypoints} />
+              ) : (
+                <FlightMapView flightRoute={routes[0]} waypoints={waypoints} />
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </section>
+      <Features />
+    </>
   );
 };
 

@@ -1,7 +1,12 @@
 import Hero from '@/app/components/home/Hero'
-import { APP_NAME } from '@/config/constants';
+import { API_CONFIG, API_ENDPOINTS, APP_NAME } from '@/config/constants';
 
-export default function Home() {
+
+
+
+export default async function Home() {
+
+
   return (
     <div>
       <Hero 

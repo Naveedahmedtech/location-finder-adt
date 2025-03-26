@@ -1,7 +1,8 @@
-import { Home, Plane, Car } from "lucide-react";
+import { Home, Plane, Car, Info } from "lucide-react";
 
 export const NAV_LINKS = [
   { name: "Home", href: "/", icon: <Home size={18} /> },
+  { name: "About", href: "/about", icon: <Info size={18} /> },
   // { name: "Airport", href: "/airport", icon: <Plane size={18} /> },
   // { name: "Hotel", href: "/hotel", icon: <Hotel size={18} /> },
   { name: "Drive Distance", href: "/driving-distance", icon: <Car size={18} /> },

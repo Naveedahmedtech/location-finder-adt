@@ -1,60 +1,64 @@
+import {AboutLanguageContent, LanguageContent} from "@/types/content";
+
 export interface Route {
-  coordinates: [number, number][];
-  distance: number;
-  duration: { hours: number; minutes: number };
+    coordinates: [number, number][];
+    distance: number;
+    duration: { hours: number; minutes: number };
 }
 
 export interface Waypoint {
-  location: [number, number];
-  name: string;
+    location: [number, number];
+    name: string;
 }
 
 export interface TripSummary {
-  distance: number;
-  duration: { hours: number; minutes: number };
-  unit: string;
+    distance: number;
+    duration: { hours: number; minutes: number };
+    unit: string;
 }
 
 export interface SearchParams {
-  from: string;
-  to: string;
-  stops?: string[];
+    from: string;
+    to: string;
+    stops?: string[];
 }
 
 export interface SearchResult {
-  routes: Route[];
-  waypoints: Waypoint[];
-  tripSummary: TripSummary | null;
-  error: string | null;
+    routes: Route[];
+    waypoints: Waypoint[];
+    tripSummary: TripSummary | null;
+    error: string | null;
 }
 
 export interface ApiResponse {
-  destination?: string;
-  origin?: string;
-  legs?: {
-    from: string;
-    to: string;
+    destination?: string;
+    origin?: string;
+    legs?: {
+        from: string;
+        to: string;
+        routes?: [
+            {
+                distance: number;
+                distance_unit: string;
+                duration_hours: number;
+                duration_minutes: number;
+                geometry: { coordinates: [number, number][] };
+            }
+        ];
+        waypoints?: { location: [number, number]; name: string }[];
+    }[];
     routes?: {
-      distance: number;
-      distance_unit: string;
-      duration_hours: number;
-      duration_minutes: number;
-      geometry: { coordinates: [number, number][] };
+        distance: number;
+        distance_unit: string;
+        duration_hours: number;
+        duration_minutes: number;
+        geometry: { coordinates: [number, number][] };
     }[];
     waypoints?: { location: [number, number]; name: string }[];
-  }[];
-  routes?: {
-    distance: number;
-    distance_unit: string;
-    duration_hours: number;
-    duration_minutes: number;
-    geometry: { coordinates: [number, number][] };
-  }[];
-  waypoints?: { location: [number, number]; name: string }[];
-  total_distance?: number;
-  total_distance_unit?: string;
-  total_duration_hours?: number;
-  total_duration_minutes?: number;
+    total_distance?: number;
+    total_distance_unit?: string;
+    total_duration_hours?: number;
+    total_duration_minutes?: number;
 }
 
 
@@ -66,12 +70,44 @@ export interface ApiResponseFlight {
     duration_hours: number;
     duration_minutes: number;
     geometry: {
-      coordinates: [number, number][]; // Array of [longitude, latitude]
-      type: "LineString";
+        coordinates: [number, number][]; // Array of [longitude, latitude]
+        type: "LineString";
     };
     notes: string;
     origin: string;
     origin_coords: [number, number]; // [latitude, longitude]
     unit_system: string;
-  }
-  
+}
+
+export interface TripSummaryProps {
+    distance: number;
+    duration: {
+        hours: number;
+        minutes: number;
+    };
+    unit: string;
+}
+
+
+export interface LanguageEditorProps {
+    language: string;
+    data: {
+        created_at: string;
+        cta: string;
+        features: string[];
+        headline: string;
+        intro_paragraph: string;
+        updated_at: string;
+        _id: string;
+    };
+};
+export type AdminTab = "home" | "about" | "privacy";
+export interface  AdminTabsProps {
+    activeTab: AdminTab;
+    onChange: (tab: AdminTab) => void;
+}
+
+export interface EditorProps {
+    language: string;
+    data: AboutLanguageContent | LanguageContent;
+}

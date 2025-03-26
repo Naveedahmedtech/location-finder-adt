@@ -140,17 +140,30 @@ export const handleDrivingSearch = async ({
     }
 
     /*** ✅ Extract Trip Summary ***/
-    const tripSummary: TripSummary | null =
-      response.total_distance !== undefined
-        ? {
-            distance: response.total_distance,
-            duration: {
-              hours: response.total_duration_hours ?? 0,
-              minutes: response.total_duration_minutes ?? 0,
-            },
-            unit: response.total_distance_unit ?? "km",
-          }
-        : null;
+    // const tripSummary: TripSummary | null =
+    //   response.total_distance !== undefined
+    //     ? {
+    //         distance: response.total_distance,
+    //         duration: {
+    //           hours: response.total_duration_hours ?? 0,
+    //           minutes: response.total_duration_minutes ?? 0,
+    //         },
+    //         unit: response.total_distance_unit ?? "km",
+    //       }
+    //     : null;
+    let tripSummary: TripSummary | null = null;
+
+    if (response?.routes?.length) {
+      tripSummary = {
+        distance: response.routes[0].distance,
+        duration: {
+          hours: response.routes[0].duration_hours ?? 0,
+          minutes: response.routes[0].duration_minutes ?? 0,
+        },
+        unit: response.routes[0].distance_unit ?? "km",
+      };
+    }
+
 
     return { routes, waypoints, tripSummary, error: null };
   } catch (error: unknown) {

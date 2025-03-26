@@ -5,12 +5,13 @@ interface ApiRequestOptions {
   method?: "GET" | "POST"; // Can be extended for more HTTP methods
   params?: Record<string, string | number>;
   body?: Record<string, any>; // Only used for POST requests
+  token?: string;
 }
 
 /**
  * Generic function to make API requests to the application's main backend (`SERVER_URL`).
  */
-export const apiRequest = async <T>({ endpoint, method = "GET", params, body }: ApiRequestOptions): Promise<T | null> => {
+export const apiRequest = async <T>({ endpoint, method = "GET", params, body, token }: ApiRequestOptions): Promise<T | null> => {
   try {
     const url = new URL(`${API_CONFIG.SERVER_URL}/${endpoint}`);
 
@@ -18,11 +19,17 @@ export const apiRequest = async <T>({ endpoint, method = "GET", params, body }: 
       Object.keys(params).forEach((key) => url.searchParams.append(key, String(params[key])));
     }
 
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     const response = await fetch(url.toString(), {
       method,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: method === "POST" ? JSON.stringify(body) : undefined,
     });
 

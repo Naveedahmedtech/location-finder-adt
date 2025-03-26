@@ -1,6 +1,6 @@
-const HeroTitle: React.FC<{ title: string; subtitle?: string }> = ({ title, subtitle }) => {
+const HeroTitle: React.FC<{ title: string | undefined; subtitle?: string }> = ({ title = 'Plan Your Trip Instantly', subtitle }) => {
   return (
-    <div className="max-w-3xl mx-auto text-center ">
+    <div className="max-w-3xl mx-auto text-center mb-5">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
         {title}
       </h1>
