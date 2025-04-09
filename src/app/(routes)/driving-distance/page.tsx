@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic'
+
+
 import Distance from '@/app/components/common/Distance'
 
 const page = () => {

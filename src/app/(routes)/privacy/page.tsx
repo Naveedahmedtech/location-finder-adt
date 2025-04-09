@@ -1,3 +1,6 @@
+'use client'
+
+
 import PrivacyPolicyViewer from "@/app/components/PrivacyPolicyViewer";
 
 const page = () => {

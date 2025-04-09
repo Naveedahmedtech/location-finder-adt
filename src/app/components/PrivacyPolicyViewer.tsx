@@ -2,6 +2,7 @@
 
 import { ShieldCheck, Info, Lock, Cookie, Mail, Repeat2, User } from "lucide-react";
 import { useContent } from "@/context/ContentContext";
+import React from 'react'
 
 
 

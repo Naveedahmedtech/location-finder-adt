@@ -3,6 +3,7 @@
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ContentProvider } from "@/context/ContentContext";
+import React from 'react'
 
 type Props = {
     children: React.ReactNode;

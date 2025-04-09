@@ -1,5 +1,8 @@
+export const dynamic = 'force-dynamic'
+
+
 import Hero from '@/app/components/home/Hero'
-import { API_CONFIG, API_ENDPOINTS, APP_NAME } from '@/config/constants';
+import {  APP_NAME } from '@/config/constants';
 
 
 

@@ -1,3 +1,6 @@
+'use client'
+import React from 'react'
+
 const HeroTitle: React.FC<{ title: string | undefined; subtitle?: string }> = ({ title = 'Plan Your Trip Instantly', subtitle }) => {
   return (
     <div className="max-w-3xl mx-auto text-center mb-5">

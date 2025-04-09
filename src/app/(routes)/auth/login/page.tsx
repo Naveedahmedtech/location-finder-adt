@@ -1,3 +1,6 @@
+'use client'
+
+
 import LoginForm from "@/app/components/form/LoginForm";
 
 const page = () => {

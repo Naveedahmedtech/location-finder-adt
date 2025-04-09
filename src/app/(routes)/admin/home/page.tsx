@@ -1,3 +1,6 @@
+'use client'
+
+
 import AdminPage from "@/app/components/admin/AdminPage";
 
 const page = () => {

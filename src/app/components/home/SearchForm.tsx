@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Dropdown from "@/app/components/ui/Dropdown";
 import InputField from "@/app/components/ui/InputField";
 import SearchButton from "@/app/components/ui/SearchButton";

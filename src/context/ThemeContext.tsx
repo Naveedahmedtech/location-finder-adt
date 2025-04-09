@@ -1,5 +1,6 @@
-'use client'
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+'use client';
+
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 interface ThemeContextProps {
     theme: 'light' | 'dark';
@@ -7,29 +8,31 @@ interface ThemeContextProps {
 }
 
 const ThemeContext = createContext<ThemeContextProps>({
-    theme: 'dark', 
-    toggleTheme: () => { }, 
+    theme: 'dark',
+    toggleTheme: () => {},
 });
 
 export const useTheme = () => useContext(ThemeContext);
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
+    // ✅ Load saved theme or fallback to 'dark'
     useEffect(() => {
-        const storedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-        const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const saved = localStorage.getItem('theme') as 'light' | 'dark' | null;
+        const initialTheme = saved ?? 'dark';
 
-        setTheme(storedTheme || systemPreference);
-        document.documentElement.classList.add(storedTheme || systemPreference);
+        setTheme(initialTheme);
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(initialTheme);
     }, []);
 
+    // ✅ Toggle & persist theme
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
         localStorage.setItem('theme', newTheme);
-
-        document.documentElement.classList.remove(theme);
+        document.documentElement.classList.remove('light', 'dark');
         document.documentElement.classList.add(newTheme);
     };
 

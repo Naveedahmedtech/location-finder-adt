@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
 import L, { LatLngTuple } from "leaflet";
 import { computeGreatCircleArc } from "@/utils/greatCircle";
