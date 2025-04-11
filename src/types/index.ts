@@ -4,6 +4,8 @@ export interface Route {
     coordinates: [number, number][];
     distance: number;
     duration: { hours: number; minutes: number };
+    distance_summary: string;
+    travel_time_summary: string;
 }
 
 export interface Waypoint {
@@ -43,6 +45,8 @@ export interface ApiResponse {
                 duration_hours: number;
                 duration_minutes: number;
                 geometry: { coordinates: [number, number][] };
+                distance_summary: string;
+                travel_time_summary: string;
             }
         ];
         waypoints?: { location: [number, number]; name: string }[];
@@ -53,6 +57,8 @@ export interface ApiResponse {
         duration_hours: number;
         duration_minutes: number;
         geometry: { coordinates: [number, number][] };
+        distance_summary: string;
+        travel_time_summary: string;
     }[];
     waypoints?: { location: [number, number]; name: string }[];
     total_distance?: number;
@@ -69,6 +75,8 @@ export interface ApiResponseFlight {
     distance_unit: string;
     duration_hours: number;
     duration_minutes: number;
+    travel_time_summary: string;
+    distance_summary: string;
     geometry: {
         coordinates: [number, number][]; // Array of [longitude, latitude]
         type: "LineString";
@@ -80,12 +88,8 @@ export interface ApiResponseFlight {
 }
 
 export interface TripSummaryProps {
-    distance: number;
-    duration: {
-        hours: number;
-        minutes: number;
-    };
-    unit: string;
+    distance_summary: string;
+    travel_time_summary : string;
 }
 
 

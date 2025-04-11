@@ -7,6 +7,8 @@ interface DropdownProps {
   }
   
   const Dropdown: React.FC<DropdownProps> = ({ value, onChange, options }) => {
+
+    console.log({ value, options });
     return (
       <div className="w-full sm:flex-1">
         <label htmlFor="trip-type" className="sr-only">

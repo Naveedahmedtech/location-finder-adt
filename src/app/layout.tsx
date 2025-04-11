@@ -7,6 +7,8 @@ import StickyThemeSwitcher from "@/app/components/StickyThemeSwitcher";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import ClientProviders from "@/app/ClientProviders";
+import NextTopLoader from 'nextjs-toploader';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +59,7 @@ const RootLayout = ({
       <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+      <NextTopLoader color="#FFFF" />
       <ClientProviders>
         <Header />
         <main className="mt-5 flex-grow">{children}</main>

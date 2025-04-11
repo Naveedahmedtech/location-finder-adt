@@ -20,7 +20,9 @@ export const API_ENDPOINTS = {
   PRIVACY_POLICY: "privacy-policy",
   ADD_ABOUT_CONTENT: "about/create-about-info",
   ADD_HOME_CONTENT: "homepage/homepage-texts",
-  ADD_PRIVACY_CONTENT: "create-privacy-policy"
+  ADD_PRIVACY_CONTENT: "create-privacy-policy",
+  GET_COUNTRY_LIST: "geo/listing-countries",
+  GET_CITY_BY_COUNTRY: "geo/cities-by-country",
 }
 
 

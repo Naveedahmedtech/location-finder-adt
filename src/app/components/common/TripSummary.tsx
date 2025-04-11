@@ -1,27 +1,35 @@
-"use client";
+'use client';
 
 import React from "react";
 import { TripSummaryProps } from "@/types";
+import { MapPin, Clock } from "lucide-react";
 
-const TripSummary: React.FC<TripSummaryProps> = ({ distance, duration, unit }) => {
+const TripSummary: React.FC<TripSummaryProps> = ({
+                                                     distance_summary,
+                                                     travel_time_summary,
+                                                 }) => {
     return (
-        <div className="mt-8 mx-auto max-w-xl bg-surface p-6 rounded-2xl shadow-xl border border-border text-center">
-            <h3 className="text-2xl font-bold text-textPrimary mb-3 flex items-center justify-center gap-2">
-                Trip Summary
+        <div className="mt-10 mx-auto max-w-xl px-6 py-5 bg-muted/30 border border-border rounded-2xl shadow-xl backdrop-blur-md">
+            <h3 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
+                🧭 Trip Summary
             </h3>
-            <div className="space-y-2 text-base sm:text-lg">
-                <p className="font-medium text-textPrimary">
-                    Total Distance:{" "}
-                    <span className="font-bold text-accent">
-            {distance} {unit}
-          </span>
-                </p>
-                <p className="font-medium text-textPrimary">
-                    Estimated Duration:{" "}
-                    <span className="font-bold text-accent">
-            {duration.hours}h {duration.minutes}m
-          </span>
-                </p>
+
+            <div className="space-y-4 text-left text-sm sm:text-base">
+                <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-primary mt-1" />
+                    <div>
+                        <p className="text-muted-foreground font-medium">Total Distance</p>
+                        <p className="font-semibold text-accent">{distance_summary}</p>
+                    </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                    <Clock className="w-5 h-5 text-primary mt-1" />
+                    <div>
+                        <p className="text-muted-foreground font-medium">Estimated Time</p>
+                        <p className="font-semibold text-accent">{travel_time_summary}</p>
+                    </div>
+                </div>
             </div>
         </div>
     );

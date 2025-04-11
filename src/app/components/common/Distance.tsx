@@ -24,7 +24,9 @@ const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number 
     const [routes, setRoutes] = useState<{
         coordinates: [number, number][],
         distance: number,
-        duration: { hours: number, minutes: number }
+        duration: { hours: number, minutes: number };
+        distance_summary: string;
+        travel_time_summary: string;
     }[]>([]);
     const [waypoints, setWaypoints] = useState<{ location: [number, number]; name: string }[]>([]);
     const [tripSummary, setTripSummary] = useState<{
@@ -104,9 +106,8 @@ const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number 
                 {/* Trip Summary */}
                 {tripSummary && (
                     <TripSummary
-                        distance={tripSummary.distance}
-                        duration={tripSummary.duration}
-                        unit={tripSummary.unit}
+                        distance_summary={routes[0]?.distance_summary}
+                        travel_time_summary={routes[0]?.travel_time_summary}
                     />
                 )}
 
