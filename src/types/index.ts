@@ -23,6 +23,7 @@ export interface SearchParams {
     from: string;
     to: string;
     stops?: string[];
+    is_db: boolean;
 }
 
 export interface SearchResult {

@@ -23,6 +23,8 @@ export const API_ENDPOINTS = {
   ADD_PRIVACY_CONTENT: "create-privacy-policy",
   GET_COUNTRY_LIST: "geo/listing-countries",
   GET_CITY_BY_COUNTRY: "geo/cities-by-country",
+  COUNTRIES_DISTANCE_TO_OTHERS: "countries",
+  CITY_DISTANCE_TO_OTHERS: "cities",
 }
 
 

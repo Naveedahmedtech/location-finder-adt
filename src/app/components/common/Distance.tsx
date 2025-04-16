@@ -11,11 +11,13 @@ import {XCircle, X} from "lucide-react";
 import TripSummary from "@/app/components/common/TripSummary";
 import Features from "@/app/components/home/Features";
 
-const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number }> = ({
-                                                                                          title,
-                                                                                          subtitle,
-                                                                                          tripOption
-                                                                                      }) => {
+const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number, dropdownHidden?: boolean, is_db?: boolean }> = ({
+                                                                                                                   title,
+                                                                                                                   subtitle,
+                                                                                                                   tripOption,
+                                                                                                                   dropdownHidden = true,
+                                                                                                                   is_db = false,
+                                                                                                               }) => {
     const [tripType, setTripType] = useState(tripOptions[tripOption]);
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
@@ -44,14 +46,13 @@ const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number 
         setTripSummary(null);
 
         let result;
-        if (tripType === "Driving Distance") {
-            result = await handleDrivingSearch({from, to, stops});
-        } else if (tripType === "Flight Distance") {
-            result = await handleFlightSearch({from, to});
+        if (tripType === tripOptions[1]) {
+            result = await handleDrivingSearch({from, to, stops, is_db});
+        } else if (tripType === tripOptions[0]) {
+            result = await handleFlightSearch({from, to, is_db});
         } else {
             result = {routes: [], waypoints: [], tripSummary: null, error: "Invalid trip type selected."};
         }
-
         setRoutes(result.routes);
         setWaypoints(result.waypoints);
         setTripSummary(result.tripSummary);
@@ -77,7 +78,7 @@ const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number 
                         setStops={setStops}
                         tripOptions={tripOptions}
                         onSearch={handleTripSearch}
-                        hiddenDropdown={true}
+                        hiddenDropdown={dropdownHidden}
                     />
                 </div>
 
@@ -113,8 +114,7 @@ const Distance: React.FC<{ title: string; subtitle?: string, tripOption: number 
 
                 {/* Map Section */}
                 {routes.length > 0 && (
-                    <div className="mt-10 mx-auto max-w-6xl">
-                        <h3 className="text-xl font-semibold text-center text-textPrimary mb-4">🗺️ Route Map</h3>
+                    <div className="mt-1 mx-auto max-w-6xl">
                         <div className="bg-surface p-4 rounded-xl shadow-xl border border-border">
                             {tripType === "Driving Distance" ? (
                                 <MapView routes={routes} stops={waypoints}/>

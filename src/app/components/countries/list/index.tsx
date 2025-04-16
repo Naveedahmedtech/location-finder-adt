@@ -30,7 +30,7 @@ const CountryList = ({ countries, page }: CountryListProps) => {
                 ) : (
                     <>
                         <p className="mt-2 text-center text-muted-foreground text-sm md:text-base mb-3">
-                            To list the distance from country to other countries, click a country name below.
+                            Select a country to calculate travel distance with other countries
                         </p>
                     </>
                 )

@@ -9,7 +9,7 @@ import {ApiResponse, ApiResponseFlight, Route, SearchParams, SearchResult, TripS
 /**
  * Handles trip search and processes API response for flight distance.
  */
-export const handleFlightSearch = async ({from, to}: SearchParams): Promise<SearchResult> => {
+export const handleFlightSearch = async ({from, to, is_db = false}: SearchParams): Promise<SearchResult> => {
     if (!from.trim() || !to.trim()) {
         return {routes: [], waypoints: [], tripSummary: null, error: "Please enter both origin and destination."};
     }
@@ -18,7 +18,7 @@ export const handleFlightSearch = async ({from, to}: SearchParams): Promise<Sear
         const response = await apiRequest<ApiResponseFlight>({
             endpoint: API_ENDPOINTS.FLIGHT,
             method: "POST",
-            body: {origin: from, destination: to},
+            body: {origin: from, destination: to, is_db},
         });
 
         if (!response) {
@@ -69,6 +69,7 @@ export const handleDrivingSearch = async ({
                                               from,
                                               to,
                                               stops = [],
+                                              is_db = false
                                           }: SearchParams): Promise<SearchResult> => {
     if (!from.trim() || !to.trim()) {
         return {routes: [], waypoints: [], tripSummary: null, error: "Please enter both origin and destination."};
@@ -78,7 +79,7 @@ export const handleDrivingSearch = async ({
         const response = await apiRequest<ApiResponse>({
             endpoint: API_ENDPOINTS.DRIVING,
             method: "POST",
-            body: {origin: from, destination: to, stops: stops.length > 0 ? stops : undefined},
+            body: {origin: from, destination: to, stops: stops.length > 0 ? stops : undefined, is_db},
         });
 
         if (!response) {

@@ -8,8 +8,9 @@ import TripSummary from "@/app/components/common/TripSummary";
 import { handleDrivingSearch, handleFlightSearch } from "@/utils/search";
 import { X, XCircle, Locate } from "lucide-react";
 import {tripOptions} from "@/config/constants";
+import DistanceList from "@/app/components/common/DistanceList";
 
-const CityToCity = ({ cities, countryName }: any) => {
+const CityToCity = ({ cities, countryName, otherCitiesDistance }: any) => {
     const [origin, setOrigin] = useState();
     const [destination, setDestination] = useState("");
     const [tripType] = useState(tripOptions[1]);
@@ -63,9 +64,9 @@ const CityToCity = ({ cities, countryName }: any) => {
 
         let result;
         if (tripType === "Driving Distance") {
-            result = await handleDrivingSearch({ from: origin, to: destination, stops: [] });
+            result = await handleDrivingSearch({ from: origin, to: destination, stops: [], is_db: true });
         } else {
-            result = await handleFlightSearch({ from: origin, to: destination });
+            result = await handleFlightSearch({ from: origin, to: destination,  is_db: true });
         }
 
         setRoutes(result.routes);
@@ -122,7 +123,7 @@ const CityToCity = ({ cities, countryName }: any) => {
             )}
 
             {tripSummary && (
-                <div className="mt-10 max-w-3xl mx-auto">
+                <div className="mt-1 max-w-3xl mx-auto">
                     <TripSummary
                         distance_summary={routes[0]?.distance_summary}
                         travel_time_summary={routes[0]?.travel_time_summary}
@@ -131,8 +132,7 @@ const CityToCity = ({ cities, countryName }: any) => {
             )}
 
             {routes.length > 0 && (
-                <div className="mt-12 mx-auto max-w-6xl">
-                    <h3 className="text-xl font-semibold text-center text-textPrimary mb-4">🗺️ Route Map</h3>
+                <div className="mt-1 mx-auto max-w-6xl">
                     <div className="bg-surface p-4 rounded-xl shadow-xl border border-border">
                         {tripType === "Driving Distance" ? (
                             <MapView routes={routes} stops={waypoints} />
@@ -142,6 +142,11 @@ const CityToCity = ({ cities, countryName }: any) => {
                     </div>
                 </div>
             )}
+
+            {
+                otherCitiesDistance &&
+                <DistanceList results={otherCitiesDistance} country={false} />
+            }
         </section>
     );
 };
